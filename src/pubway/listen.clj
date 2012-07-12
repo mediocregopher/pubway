@@ -1,19 +1,14 @@
 (ns pubway.listen
   (:use [ring.adapter.jetty :only [run-jetty]])
-  (:require [clj-json.core :as json]))
+  (:require [pubway.process :as process]))
 
-(defn process-data [data]
-  (let [processed (re-seq #"$([^&=]+)=([^=&]+)" data)]
-  (if (= nil processed)
-    data
-    (last (first processed)))))
 
 (defn app [req]                                
   (do
-    (println (process-data (slurp (req :body))))
-    {:status 200                                
-       :headers {"Content-Type" "text/plain"}
-       :body "Hello from Clojure!\n"}))
+    (let [response (process/process-data (slurp (req :body)))]
+      {:status 200                                
+         :headers {"Content-Type" "text/plain"}
+         :body response})))
                                 
                                 
 (defn -mainExt [portString]                                
