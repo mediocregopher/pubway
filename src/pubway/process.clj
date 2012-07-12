@@ -1,5 +1,6 @@
 (ns pubway.process
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str])
+  (:require [pubway.pubsub :as pubsub]))
 
 (defn decode-pub [data]
   (if (= 2 (count data))
