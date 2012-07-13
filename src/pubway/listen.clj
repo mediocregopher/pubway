@@ -4,11 +4,11 @@
 
 
 (defn app [req]                                
-  (do
-    (let [response (process/process-data (slurp (req :body)))]
-      {:status 200                                
-         :headers {"Content-Type" "text/plain"}
-         :body response})))
+  (let [response (process/process-data (slurp (req :body)))]
+    {:status 200                                
+       :headers {"Content-Type" "text/plain"
+                 "X-Best-Gopher-Ever" "MediocreGopher"}
+       :body     response}))
                                 
                                 
 (defn -mainExt [portString]                                
