@@ -4,12 +4,12 @@
 
 (defn decode-pub [data]
   (if (= 2 (count data))
-    "ok"
+    (pubsub/do-pub (nth data 0) (nth data 1))
     "badargs" ))
 
 (defn decode-sub [data]
   (if (= 1 (count data))
-    "ok"
+    (pubsub/sub-listen (nth data 0))
     "badargs" ))
 
 (defn decode [data]
