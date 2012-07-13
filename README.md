@@ -19,3 +19,11 @@ Installation
   * `git clone https://github.com/mediocregopher/pubway.git`
   * Edit `.env` to reflect the port you want pubway to run on
   * `foreman start`
+
+Author
+------
+Brian Picciano
+
+License
+--------
+[GPL3](http://www.gnu.org/licenses/gpl.html)
