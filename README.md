@@ -9,6 +9,8 @@ Subscribing: `curl -d 'sub <subname>' <server address>:<port>`
 
 Publishing: `curl -d 'pub <subname> <value>' <server address>:<port>`
 
+(I have a sample server set up at http://cold-warrior-3505.herokuapp.com:80 if you want to play around with it)
+
 
 Installation
 ------------
