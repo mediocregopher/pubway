@@ -1,28 +1,22 @@
 (ns pubway.pubsub)
 
-(defn now [] (new java.util.Date))
+(def master (atom nil))
 
-(def master (agent {}))
-
-(defn append-promise [map sub prom]
-  (let [currsubmap (map sub {})]
-    (assoc map sub 
-      (assoc currsubmap
-        :promises (conj (currsubmap :promises (list)) prom)
-        :tsmod now))))
-        
-(defn deliver-promises [map sub value]
-  (do
-    (doseq [prom ((map sub {}) :promises (list))]
-       (deliver prom value))
-    (dissoc map sub)))
+(defn watch-master [sub prom]
+  (add-watch master (rand)
+    (partial
+      (fn [prom s key ref _old new]
+        (if (= s (first new))
+          (do (remove-watch ref key) (deliver prom (last new)))
+          :donothing))
+      prom sub)))
 
 (defn sub-listen [sub]
   (let [prom (promise)]
-    (send master append-promise sub prom)
+    (watch-master sub prom)
     @prom))
 
 (defn do-pub [sub value]
   (do
-    (send master deliver-promises sub value)
+    (swap! master (fn [_] [sub value]))
     "ok"))
